@@ -15,28 +15,30 @@ const instanceUrl = axios.create({
 
 /**
  * for fetching data 'GET
- * @param {} path 
- * @returns 
+ * @param {} path
+ * @returns
  */
 export async function fetchAPI(path) {
   return await instanceUrl
     .get(path)
     .then((response) => {
-      return response.data;
+      console.log(response);
+      return response;
     })
     .catch((err) => {
       return err;
     });
 }
- /**
-  * for submit data 'POST'
-  * @param {*} path 
-  * @param {*} postData 
-  * @returns 
-  */
+
+/**
+ * for submit data 'POST'
+ * @param {*} path
+ * @param {*} postData
+ * @returns
+ */
 export async function postAPI(path, postData) {
-return await instanceUrl
-    .post(path,postData)
+  return await instanceUrl
+    .post(path, postData)
     .then((response) => {
       return response.data;
     })
@@ -46,11 +48,11 @@ return await instanceUrl
 }
 /**
  * delete entry  'DELETE'
- * @param {*} path 
- * @returns 
+ * @param {*} path
+ * @returns
  */
 export async function deleteAPI(path) {
-return await instanceUrl
+  return await instanceUrl
     .delete(`${path}`)
     .then((response) => {
       return response.data;
@@ -58,21 +60,19 @@ return await instanceUrl
     .catch((err) => {
       return err;
     });
-
 }
- /**
-  * modify entry api 'PUT'
-  * @param {*} path 
-  * @returns 
-  */
-export async function updateAPI(path,putData) {
-return await instanceUrl
-    .put(`${path}`,putData)
+/**
+ * modify entry api 'PUT'
+ * @param {*} path
+ * @returns
+ */
+export async function updateAPI(path, putData) {
+  return await instanceUrl
+    .put(`${path}`, putData)
     .then((response) => {
       return response.data;
     })
     .catch((err) => {
       return err;
     });
-
 }
