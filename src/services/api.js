@@ -22,7 +22,6 @@ export async function fetchAPI(path) {
   return await instanceUrl
     .get(path)
     .then((response) => {
-      console.log(response);
       return response;
     })
     .catch((err) => {
@@ -40,7 +39,8 @@ export async function postAPI(path, postData) {
   return await instanceUrl
     .post(path, postData)
     .then((response) => {
-      return response.data;
+      console.log(response);
+      return response;
     })
     .catch((err) => {
       return err;
@@ -55,7 +55,7 @@ export async function deleteAPI(path) {
   return await instanceUrl
     .delete(`${path}`)
     .then((response) => {
-      return response.data;
+      return response;
     })
     .catch((err) => {
       return err;
@@ -68,9 +68,10 @@ export async function deleteAPI(path) {
  */
 export async function updateAPI(path, putData) {
   return await instanceUrl
-    .put(`${path}`, putData)
+    .put(path, putData)
     .then((response) => {
-      return response.data;
+      console.log(response.data);
+      return response;
     })
     .catch((err) => {
       return err;

@@ -16,7 +16,6 @@ const Login = (props) => {
       AuthService.authenticate(session[1]);
       fetchAPI(`/user`)
         .then((res) => {
-          console.log(res.data);
           if (res.data && Object.keys(res.data).length) {
             AuthService.setUserData(res.data);
             history.push("/todo");

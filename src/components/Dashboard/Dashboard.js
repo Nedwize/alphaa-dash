@@ -26,10 +26,13 @@ const Dashboard = (props) => {
   }, []);
 
   const addTask = (event, task) => {
+    console.log("task:", task);
+    console.log("Event:", event);
     event.preventDefault();
     if (id) {
-      updateAPI(`/todo/${id}`, task)
+      updateAPI(`/todos/${id}`, task)
         .then((res) => {
+          console.log(res);
           setTaskList((previousState) => {
             let titleIndex;
             taskList.map((i, index) => {
@@ -50,7 +53,7 @@ const Dashboard = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
-      postAPI(`/todo`, task)
+      postAPI(`/todos`, task)
         .then((res) => {
           if (res.data && res.data.todo) {
             setTaskList((previousState) => {
@@ -65,8 +68,9 @@ const Dashboard = (props) => {
   };
   const openTaskEditModal = (id) => {
     if (id) {
-      fetchAPI(`/todo/${id}`)
+      fetchAPI(`/todos/${id}`)
         .then((res) => {
+          console.log(res.data);
           listData.current = res.data;
           setId(id);
           setOpenTask(true);
@@ -74,7 +78,7 @@ const Dashboard = (props) => {
         .catch((err) => console.log(err));
     }
   };
-
+  console.log(taskList);
   return (
     <div className={classes.body}>
       <Header

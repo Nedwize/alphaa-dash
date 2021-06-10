@@ -5,26 +5,24 @@ import { Edit, Delete } from "@material-ui/icons";
 import { deleteAPI } from "../../services/api";
 const ReactGridLayout = WidthProvider(RGL);
 
-
 const TodoList = (props) => {
   const [layout, setLayout] = useState(props.taskList);
   const [toggle, setToggle] = useState(false);
-
 
   useEffect(() => {
     setLayout(props.taskList);
   }, [props.taskList]);
   const deleteList = (item) => {
-    deleteAPI(`/todo/${item._id}`)
+    deleteAPI(`/todos/${item._id}`)
       .then((res) => {
         setLayout((previousState) => {
           let titleIndex;
           layout.map((i, index) => {
-            if (i['_id'] === item._id ) titleIndex = index;
+            if (i["_id"] === item._id) titleIndex = index;
             return true;
           });
           layout.splice(titleIndex, 1);
-          return layout
+          return layout;
         });
         setToggle(!toggle);
       })
@@ -32,16 +30,15 @@ const TodoList = (props) => {
   };
 
   const editList = (item) => {
-   props.setOpenTask(item._id);
+    props.setOpenTask(item._id);
   };
-  const onLayoutChange=(e)=>{
+  const onLayoutChange = (e) => {
     localStorage.setItem(props.userId, JSON.stringify(e));
-  }
- 
-
+  };
+  console.log(layout[1]);
   return (
     <React.Fragment>
-      <ReactGridLayout {...props} onLayoutChange ={(e)=>onLayoutChange(e)}> 
+      <ReactGridLayout {...props} onLayoutChange={(e) => onLayoutChange(e)}>
         {layout.map((item) => (
           <div key={item.i} data-grid={item}>
             <IconButton

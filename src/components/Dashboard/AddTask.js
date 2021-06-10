@@ -22,8 +22,8 @@ const AddTask = (props) => {
   const CheckIfNotEmpty = (text) => !(text == null || /^\s*$/.test(text));
 
   useEffect(() => {
-      setTitle(props.listData.current.title);
-      setDescription(props.listData.current.description);
+    setTitle(props.listData.current.title);
+    setDescription(props.listData.current.description);
   }, [props.id, props.listData]);
 
   const checkEnable = (input) => {
@@ -49,11 +49,12 @@ const AddTask = (props) => {
       disableEscapeKeyDown={true}
       disableBackdropClick={true}
       onClose={props.close}
-      key={props.id?props.id:''}
+      key={props.id ? props.id : ""}
       onExit={clearState}
-
     >
-      <DialogTitle className={classes.dialogTitle}>{props.id ? "Update Task" :"Add Task"}</DialogTitle>
+      <DialogTitle className={classes.dialogTitle}>
+        {props.id ? "Update Task" : "Add Task"}
+      </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <IconButton
           onClick={props.close}
@@ -96,7 +97,7 @@ const AddTask = (props) => {
                 setDescription(e.target.value);
                 checkEnable(e.target);
               }}
-            />  
+            />
           </Grid>
         </Grid>
       </DialogContent>
@@ -113,11 +114,13 @@ const AddTask = (props) => {
             className={"buttonDefault"}
             onClick={(e) => props.addTask(e, { title, description })}
             type="submit"
-            disabled={ props.id ? false :
-              (isError.title || isError.description || !title || !description)
+            disabled={
+              props.id
+                ? false
+                : isError.title || isError.description || !title || !description
             }
           >
-            Add
+            {props.id ? "Update" : "Add"}
           </Button>
         </Grid>
       </DialogActions>
