@@ -1,15 +1,18 @@
-const axios = require("axios");
+import { AxiosError, AxiosResponse } from 'axios';
+import { ITodo } from '../interface';
+
+const axios = require('axios');
 
 const instanceUrl = axios.create({
-  baseURL: "/api/v1",
+  baseURL: 'http://localhost:4000/api/v1',
   transformRequest: [
-    function (data, headers) {
-      headers["authorization"] = "Bearer " + sessionStorage["authToken"];
+    function (data: any, headers: any) {
+      headers['authorization'] = 'Bearer ' + sessionStorage['authToken'];
       return JSON.stringify(data);
     },
   ],
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
@@ -18,13 +21,13 @@ const instanceUrl = axios.create({
  * @param {} path
  * @returns
  */
-export async function fetchAPI(path) {
+export async function fetchAPI(path: string): Promise<AxiosResponse> {
   return await instanceUrl
     .get(path)
-    .then((response) => {
+    .then((response: AxiosResponse) => {
       return response;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       return err;
     });
 }
@@ -35,14 +38,14 @@ export async function fetchAPI(path) {
  * @param {*} postData
  * @returns
  */
-export async function postAPI(path, postData) {
+export async function postAPI(path: string, postData: ITodo) {
   return await instanceUrl
     .post(path, postData)
-    .then((response) => {
+    .then((response: AxiosResponse) => {
       console.log(response);
       return response;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       return err;
     });
 }
@@ -51,13 +54,13 @@ export async function postAPI(path, postData) {
  * @param {*} path
  * @returns
  */
-export async function deleteAPI(path) {
+export async function deleteAPI(path: string) {
   return await instanceUrl
     .delete(`${path}`)
-    .then((response) => {
+    .then((response: AxiosResponse) => {
       return response;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       return err;
     });
 }
@@ -66,14 +69,13 @@ export async function deleteAPI(path) {
  * @param {*} path
  * @returns
  */
-export async function updateAPI(path, putData) {
+export async function updateAPI(path: string, putData: ITodo) {
   return await instanceUrl
     .put(path, putData)
-    .then((response) => {
-      console.log(response.data);
+    .then((response: AxiosResponse) => {
       return response;
     })
-    .catch((err) => {
+    .catch((err: AxiosError) => {
       return err;
     });
 }

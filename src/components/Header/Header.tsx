@@ -1,9 +1,9 @@
-import React,{useState} from "react";
-import useStyles from "../../custom-hooks/useStyles";
-import style from "../../assets/style";
-import userImage from "../../assets/images/user.jpg";
-import { fetchAPI } from "../../services/api";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import useStyles from '../../custom-hooks/useStyles';
+import style from '../../assets/style';
+import userImage from '../../assets/images/user.jpg';
+import { fetchAPI } from '../../services/api';
+import { useHistory } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -11,18 +11,27 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Fab
-} from "@material-ui/core";
-import { MoreVert, Add } from "@material-ui/icons";
+  Fab,
+} from '@material-ui/core';
+import { MoreVert, Add } from '@material-ui/icons';
+import { User } from '../../interface';
 
-const Header = ({user,logoutSession,setOpenTask}) => {
+const Header = ({
+  user,
+  logoutSession,
+  setOpenTask,
+}: {
+  user: User;
+  logoutSession: VoidFunction;
+  setOpenTask: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const classes = useStyles(style)();
   let history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
-  
+
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -31,7 +40,7 @@ const Header = ({user,logoutSession,setOpenTask}) => {
   };
   const onLogout = () => {
     fetchAPI(`/logout`).then((res) => {
-      history.push("/login");
+      history.push('/login');
       logoutSession();
     });
   };
@@ -42,18 +51,28 @@ const Header = ({user,logoutSession,setOpenTask}) => {
           <div className={classes.headerLeft}>
             <Avatar
               alt="user profile"
-              src={user && user.avatar ? user.avatar : userImage}
+              src={user && user.avatar ? user.avatar : ''}
             />
-            <h4 className={classes.userName}>{user && user.name ? user.name :''}</h4>
+            <h4 className={classes.userName}>
+              {user && user.name ? user.name : userImage}
+            </h4>
           </div>
           <div className={classes.headerRight}>
-              <Tooltip title="Add Task">
-              <Fab className={'add'} aria-label="add" onClick={() => setOpenTask(true)}>
+            <Tooltip title="Add Task">
+              <Fab
+                className={'add'}
+                aria-label="add"
+                onClick={() => setOpenTask(true)}
+              >
                 <Add />
               </Fab>
             </Tooltip>
-            <Fab className={'dot'} aria-controls="long-menu" onClick={handleClick}>
-                <MoreVert />
+            <Fab
+              className={'dot'}
+              aria-controls="long-menu"
+              onClick={handleClick}
+            >
+              <MoreVert />
             </Fab>
             {/* <IconButton
               aria-label="more"
@@ -72,7 +91,7 @@ const Header = ({user,logoutSession,setOpenTask}) => {
               PaperProps={{
                 style: {
                   maxHeight: 48 * 4.5,
-                  width: "20ch",
+                  width: '20ch',
                 },
               }}
             >

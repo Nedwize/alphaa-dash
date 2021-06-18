@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Login, Dashboard } from "../index";
-import { AuthService } from "../../services/authService";
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Login, Dashboard } from '../index';
+import { AuthService } from '../../services/authService';
 
-const Routing = (props) => {
+const Routing = () => {
   const [isLoggedIn, setLoggedIn] = useState(AuthService.isLoggedIn());
   const [welcome, setWelcome] = useState(false);
-  const loginSession = (token) => {
+  const loginSession = (token: string) => {
     setLoggedIn(true);
     setWelcome(true);
   };

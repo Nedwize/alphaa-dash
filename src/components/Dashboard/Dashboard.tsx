@@ -1,23 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
-import useStyles from "../../custom-hooks/useStyles";
-import style from "../../assets/style";
-import { Header, AddTask, TodoList, PopUp } from "../index";
-import { fetchAPI, postAPI, updateAPI } from "../../services/api";
-import { getDimensions } from "../../services/utils";
+import React, { useState, useEffect, useRef } from 'react';
+import useStyles from '../../custom-hooks/useStyles';
+import style from '../../assets/style';
+import { Header, AddTask, TodoList, PopUp } from '../index';
+import { fetchAPI, postAPI, updateAPI } from '../../services/api';
+import { getDimensions, Dimension } from '../../services/utils';
+import { AxiosResponse, ResponseType } from 'axios';
+import { ITodo } from '../../interface';
 let idCounter = 0;
 
-const Dashboard = (props) => {
+const Dashboard = (props: {
+  logoutSession: VoidFunction;
+  open: any;
+  close: any;
+}) => {
   const [openTask, setOpenTask] = useState(false);
-  const [id, setId] = useState(null);
-  const user = JSON.parse(sessionStorage.getItem("userData"));
-  const [taskList, setTaskList] = useState([]);
+  const [id, setId] = useState<string | null>(null);
+  const user = JSON.parse(sessionStorage.getItem('userData') || '');
+  const [taskList, setTaskList] = useState<Dimension[]>([]);
   let listData = useRef([]);
   const classes = useStyles(style)();
   useEffect(() => {
     fetchAPI(`/todos`)
-      .then((res, index) => {
-        const dimensions = JSON.parse(localStorage.getItem(user._id)) || [];
-        const task = res.data.map((list, index) =>
+      .then((res: AxiosResponse) => {
+        const dimensions =
+          JSON.parse(localStorage.getItem(user._id) || '') || [];
+        const task = res.data.map((list: any, index: string | number) =>
           getDimensions(list, ++idCounter, dimensions[index])
         );
         setTaskList(task);
@@ -25,27 +32,34 @@ const Dashboard = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
-  const addTask = (event, task) => {
-    console.log("task:", task);
-    console.log("Event:", event);
+  const addTask = (
+    event: any,
+    task: { title: string; description: string; _id?: string }
+  ) => {
+    console.log('task:', task);
+    console.log('Event:', event);
     event.preventDefault();
     if (id) {
       updateAPI(`/todos/${id}`, task)
-        .then((res) => {
+        .then((res: any) => {
           console.log(res);
           setTaskList((previousState) => {
-            let titleIndex;
+            let titleIndex = 0;
             taskList.map((i, index) => {
-              if (i["_id"] === id) titleIndex = index;
+              if (i['_id'] === id) titleIndex = index;
               return true;
             });
-            task["_id"] = id;
+            task['_id'] = id;
             setId(null);
-            listData = [];
+            // listData = [];
             taskList.splice(
               titleIndex,
               1,
-              getDimensions(task, taskList[titleIndex].i, taskList[titleIndex])
+              getDimensions(
+                task,
+                parseInt(taskList[titleIndex].i),
+                taskList[titleIndex]
+              )
             );
             return taskList;
           });
@@ -66,7 +80,7 @@ const Dashboard = (props) => {
         .catch((err) => console.log(err));
     }
   };
-  const openTaskEditModal = (id) => {
+  const openTaskEditModal = (id: string) => {
     if (id) {
       fetchAPI(`/todos/${id}`)
         .then((res) => {
@@ -78,7 +92,7 @@ const Dashboard = (props) => {
         .catch((err) => console.log(err));
     }
   };
-  console.log(taskList);
+
   return (
     <div className={classes.body}>
       <Header

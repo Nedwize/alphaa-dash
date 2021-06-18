@@ -1,14 +1,26 @@
 let idCounter = 0;
 
-export const getId = (idCounter) => {
+export const getId = (idCounter: number) => {
   idCounter++;
   return idCounter.toString();
 };
 
+export interface Dimension {
+  i: string;
+  _id: string;
+  title: string;
+  description: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
 export const getDimensions = (
-  task, i,
-  dimensions = { x: 0, y: 0, w: 3, h: 3}
-) => {
+  task: any,
+  i: number,
+  dimensions = { x: 0, y: 0, w: 3, h: 3 }
+): Dimension => {
   return {
     x: dimensions.x,
     y: dimensions.y,
