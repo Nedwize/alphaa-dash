@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useStyles from '../../custom-hooks/useStyles';
 import style from '../../assets/style';
-import { Header, AddTask, TodoList, PopUp } from '../index';
+import { HeaderComponent, AddTask, TodoList, PopUp } from '../index';
 import { fetchAPI, postAPI, updateAPI } from '../../services/api';
 import { getDimensions, Dimension } from '../../services/utils';
 import { AxiosResponse, ResponseType } from 'axios';
@@ -95,7 +95,7 @@ const Dashboard = (props: {
 
   return (
     <div className={classes.body}>
-      <Header
+      <HeaderComponent
         logoutSession={props.logoutSession}
         user={user}
         setOpenTask={setOpenTask}

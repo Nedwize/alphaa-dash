@@ -5,9 +5,6 @@ import userImage from '../../assets/images/user.jpg';
 import { fetchAPI } from '../../services/api';
 import { useHistory } from 'react-router-dom';
 import {
-  AppBar,
-  Toolbar,
-  Avatar,
   Menu,
   MenuItem,
   Tooltip,
@@ -15,8 +12,9 @@ import {
 } from '@material-ui/core';
 import { MoreVert, Add } from '@material-ui/icons';
 import { User } from '../../interface';
+import {Header,HeaderRight} from "ayush-todo-react-component"
 
-const Header = ({
+const HeaderComponent = ({
   user,
   logoutSession,
   setOpenTask,
@@ -44,20 +42,12 @@ const Header = ({
       logoutSession();
     });
   };
+  console.log(user)
   return (
     <div>
-      <AppBar className={classes.headerBar}>
-        <Toolbar>
-          <div className={classes.headerLeft}>
-            <Avatar
-              alt="user profile"
-              src={user && user.avatar ? user.avatar : ''}
-            />
-            <h4 className={classes.userName}>
-              {user && user.name ? user.name : userImage}
-            </h4>
-          </div>
-          <div className={classes.headerRight}>
+      <Header name={user && user.name ? user.name : userImage}  imageSrc={user && user.avatar ? user.avatar : ''}>
+        <HeaderRight handleSetOpen={() => setOpenTask(true)}/>
+       <div className={classes.headerRight}>
             <Tooltip title="Add Task">
               <Fab
                 className={'add'}
@@ -74,14 +64,6 @@ const Header = ({
             >
               <MoreVert />
             </Fab>
-            {/* <IconButton
-              aria-label="more"
-              aria-controls="long-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MoreVert />
-            </IconButton> */}
             <Menu
               id="long-menu"
               anchorEl={anchorEl}
@@ -97,13 +79,13 @@ const Header = ({
             >
               <MenuItem onClick={onLogout}>Logout</MenuItem>
             </Menu>
-
-            {/* <Button onClick={onLogout}> Logout</Button> */}
           </div>
-        </Toolbar>
-      </AppBar>
+      </Header>
     </div>
   );
 };
 
-export default Header;
+export default HeaderComponent;
+
+
+

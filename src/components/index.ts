@@ -4,13 +4,13 @@ import AddTask from './Dashboard/AddTask';
 import PopUp from './Utils/PopUp';
 import Login from './Login/Login';
 import Routing from './Routing/Routing';
-import Header from './Header/Header';
+import HeaderComponent from './Header/Header';
 export {
 Dashboard,
 PopUp,
 Login,
 Routing,
-Header,
+HeaderComponent,
 AddTask,
 TodoList
 }
