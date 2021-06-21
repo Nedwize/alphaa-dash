@@ -6,6 +6,7 @@ import Login from "./Login/Login";
 import Routing from "./Routing/Routing";
 import HeaderComponent from "./Header/Header";
 import AddDashboard from "./Dashboard/AddDashBoard";
+import DashboardsList from "./Default";
 
 export {
   Dashboard,
@@ -16,4 +17,5 @@ export {
   AddTask,
   TodoList,
   AddDashboard,
+  DashboardsList,
 };
