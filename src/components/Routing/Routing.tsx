@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Login, Dashboard } from '../index';
-import { AuthService } from '../../services/authService';
+import React, { useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Login, Dashboard, AddDashboard } from "../index";
+import { AuthService } from "../../services/authService";
 
 const Routing = () => {
   const [isLoggedIn, setLoggedIn] = useState(AuthService.isLoggedIn());
@@ -19,22 +19,37 @@ const Routing = () => {
       <BrowserRouter>
         <Switch>
           {isLoggedIn ? (
-            <Route
-              path="/todo"
-              exact
-              render={(props) => (
-                <Dashboard
-                  open={welcome}
-                  close={() => setWelcome(false)}
-                  {...props}
-                  logoutSession={logoutSession}
-                />
-              )}
-            />
+            <>
+              <Route
+                path="/"
+                exact
+                render={(props) => (
+                  <Dashboard
+                    open={welcome}
+                    close={() => setWelcome(false)}
+                    {...props}
+                    logoutSession={logoutSession}
+                  />
+                )}
+              />
+              <Route
+                path="/todo"
+                exact
+                render={(props) => (
+                  <Dashboard
+                    open={welcome}
+                    close={() => setWelcome(false)}
+                    {...props}
+                    logoutSession={logoutSession}
+                  />
+                )}
+              />
+            </>
           ) : (
             <>
               <Route
                 path="/login"
+                exact
                 render={(props) => (
                   <Login {...props} loginSession={loginSession} />
                 )}

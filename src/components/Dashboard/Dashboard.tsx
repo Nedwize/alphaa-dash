@@ -1,11 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import useStyles from '../../custom-hooks/useStyles';
-import style from '../../assets/style';
-import { Header, AddTask, TodoList, PopUp } from '../index';
-import { fetchAPI, postAPI, updateAPI } from '../../services/api';
-import { getDimensions, Dimension } from '../../services/utils';
-import { AxiosResponse, ResponseType } from 'axios';
-import { ITodo } from '../../interface';
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import useStyles from "../../custom-hooks/useStyles";
+import style from "../../assets/style";
+import {
+  HeaderComponent,
+  AddTask,
+  TodoList,
+  PopUp,
+  AddDashboard,
+} from "../index";
+import { fetchAPI, postAPI, updateAPI } from "../../services/api";
+import { getDimensions, Dimension } from "../../services/utils";
+import { AxiosResponse, ResponseType } from "axios";
+
+import { ITodo } from "../../interface";
 let idCounter = 0;
 
 const Dashboard = (props: {
@@ -14,8 +22,9 @@ const Dashboard = (props: {
   close: any;
 }) => {
   const [openTask, setOpenTask] = useState(false);
+  const [openDashboard, setOpenDashboard] = useState(false);
   const [id, setId] = useState<string | null>(null);
-  const user = JSON.parse(sessionStorage.getItem('userData') || '');
+  const user = JSON.parse(sessionStorage.getItem("userData") || "");
   const [taskList, setTaskList] = useState<Dimension[]>([]);
   let listData = useRef([]);
   const classes = useStyles(style)();
@@ -23,7 +32,7 @@ const Dashboard = (props: {
     fetchAPI(`/todos`)
       .then((res: AxiosResponse) => {
         const dimensions =
-          JSON.parse(localStorage.getItem(user._id) || '') || [];
+          JSON.parse(localStorage.getItem(user._id) || "") || [];
         const task = res.data.map((list: any, index: string | number) =>
           getDimensions(list, ++idCounter, dimensions[index])
         );
@@ -36,8 +45,8 @@ const Dashboard = (props: {
     event: any,
     task: { title: string; type: string; _id?: string }
   ) => {
-    console.log('task:', task);
-    console.log('Event:', event);
+    console.log("task:", task);
+    console.log("Event:", event);
     event.preventDefault();
     if (id) {
       updateAPI(`/todos/${id}`, task)
@@ -46,10 +55,10 @@ const Dashboard = (props: {
           setTaskList((previousState) => {
             let titleIndex = 0;
             taskList.map((i, index) => {
-              if (i['_id'] === id) titleIndex = index;
+              if (i["_id"] === id) titleIndex = index;
               return true;
             });
-            task['_id'] = id;
+            task["_id"] = id;
             setId(null);
             // listData = [];
             taskList.splice(
@@ -95,7 +104,7 @@ const Dashboard = (props: {
 
   return (
     <div className={classes.body}>
-      <Header
+      <HeaderComponent
         logoutSession={props.logoutSession}
         user={user}
         setOpenTask={setOpenTask}
@@ -117,6 +126,12 @@ const Dashboard = (props: {
         close={() => {
           setId(null);
           setOpenTask(false);
+        }}
+      />
+      <AddDashboard
+        open={openDashboard}
+        close={() => {
+          setOpenDashboard(false);
         }}
       />
       <PopUp open={props.open} close={props.close} user={user} />
