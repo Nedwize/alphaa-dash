@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RGL, { WidthProvider, Layout } from 'react-grid-layout';
+import Waterfall from '../Charts/Waterfall';
+import Bar from '../Charts/Bar';
 import { IconButton } from '@material-ui/core';
 import { Edit, Delete } from '@material-ui/icons';
 import { deleteAPI } from '../../services/api';
@@ -51,7 +53,7 @@ const TodoList = (props: Props) => {
         onLayoutChange={(layout) => onLayoutChange(layout)}
       >
         {layout.map((item) => (
-          <div key={item.i} data-grid={item}>
+          <div key={item.i} data-grid={item} style={{overflow:"hidden"}}>
             <IconButton
               className="edit"
               aria-label="Close"
@@ -67,7 +69,8 @@ const TodoList = (props: Props) => {
               <Delete />
             </IconButton>
             <h3>{item.title}</h3>
-            <p>{item.description}</p>
+            {/* { item.type ? 'bar' ? <Bar /> : <Waterfall /> } */}
+            <Waterfall />
           </div>
         ))}
       </ReactGridLayout>
