@@ -117,9 +117,9 @@ const Waterfall = () => {
         return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
       },
     },
-    legend: {
-      data: computeLegend(),
-    },
+    // legend: {
+    //   data: computeLegend(),
+    // },
     grid: {
       left: '3%',
       right: '4%',

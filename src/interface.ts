@@ -1,7 +1,7 @@
 export interface ITodo {
   _id?: string | null;
   title: string | null;
-  description: string | null;
+  type: string | null;
 }
 
 export interface User {

@@ -12,6 +12,8 @@ import {
 import useStyles from '../../custom-hooks/useStyles';
 import style from '../../assets/style';
 import { Clear } from '@material-ui/icons';
+import Waterfall from '../Charts/Waterfall';
+import Bar from '../Charts/Bar';
 
 interface Props {
   addTask: (event: any, task: any) => void;
@@ -23,24 +25,25 @@ interface Props {
 
 interface IError {
   title: boolean;
-  description: boolean;
+  type: boolean;
 }
 
 const AddTask = (props: Props) => {
   const classes = useStyles(style)();
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [type, setType] = useState('');
+  const [active, setActive] = useState('waterfall');
   const [isDisable, setIsDisable] = useState(false);
   const [isError, setIsError] = useState<IError>({
     title: false,
-    description: false,
+    type: false,
   });
   const CheckIfNotEmpty = (text: string) =>
     !(text == null || /^\s*$/.test(text));
 
   useEffect(() => {
     setTitle(props.listData.current.title);
-    setDescription(props.listData.current.description);
+    setType(props.listData.current.type);
   }, [props.id, props.listData]);
 
   const checkEnable = (
@@ -58,7 +61,7 @@ const AddTask = (props: Props) => {
     setIsDisable(!isDisable);
   };
   const clearState = () => {
-    setDescription('');
+    setType('');
     setTitle('');
   };
   return (
@@ -102,26 +105,18 @@ const AddTask = (props: Props) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              defaultValue={description}
-              helperText={isError.description ? 'Please enter description' : ''}
-              name="description"
-              placeholder="Description"
-              error={isError.description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-                checkEnable(e.target);
-              }}
-              onBlur={(e) => {
-                setDescription(e.target.value);
-                checkEnable(e.target);
-              }}
-            />
+            {active == 'bar' ? <Bar /> : <Waterfall />}
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
         <Grid className={classes.actionButton} item xs={12} sm={12} md={12}>
+          <Button type="button" onClick={(e) => setActive('waterfall')}>
+            WaterFall
+          </Button>
+          <Button type="button" onClick={(e) => setActive('bar')}>
+            Bar
+          </Button>
           <Button
             onClick={props.close}
             className={'buttonCancel'}
@@ -131,12 +126,10 @@ const AddTask = (props: Props) => {
           </Button>
           <Button
             className={'buttonDefault'}
-            onClick={(e) => props.addTask(e, { title, description })}
+            onClick={(e) => props.addTask(e, { title, type })}
             type="submit"
             disabled={
-              props.id
-                ? false
-                : isError.title || isError.description || !title || !description
+              props.id ? false : isError.title || isError.type || !title
             }
           >
             {props.id ? 'Update' : 'Add'}

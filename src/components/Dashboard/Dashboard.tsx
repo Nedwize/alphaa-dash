@@ -34,7 +34,7 @@ const Dashboard = (props: {
 
   const addTask = (
     event: any,
-    task: { title: string; description: string; _id?: string }
+    task: { title: string; type: string; _id?: string }
   ) => {
     console.log('task:', task);
     console.log('Event:', event);
