@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Login, Dashboard, AddDashboard } from "../index";
+import { Login, Dashboard, AddDashboard, DashboardsList } from "../index";
 import { AuthService } from "../../services/authService";
 
 const Routing = () => {
@@ -24,7 +24,7 @@ const Routing = () => {
                 path="/"
                 exact
                 render={(props) => (
-                  <Dashboard
+                  <DashboardsList
                     open={welcome}
                     close={() => setWelcome(false)}
                     {...props}
