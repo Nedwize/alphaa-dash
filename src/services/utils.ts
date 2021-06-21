@@ -19,7 +19,7 @@ export interface Dimension {
 export const getDimensions = (
   task: any,
   i: number,
-  dimensions = { x: 0, y: 0, w: 3, h: 3 }
+  dimensions = { x: 0, y: 0, w: 3, h: 10 }
 ): Dimension => {
   return {
     x: dimensions.x,

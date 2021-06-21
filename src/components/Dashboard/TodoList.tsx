@@ -53,7 +53,7 @@ const TodoList = (props: Props) => {
         onLayoutChange={(layout) => onLayoutChange(layout)}
       >
         {layout.map((item) => (
-          <div key={item.i} data-grid={item}>
+          <div key={item.i} data-grid={item} style={{ overflow: 'hidden' }}>
             <IconButton
               className="edit"
               aria-label="Close"
